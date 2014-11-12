@@ -105,6 +105,9 @@ var GeoJSON = (function() {
           if (feature.properties.relationId) {
             item.relationId = feature.properties.relationId;
           }
+          if (feature.properties.z_index) {
+            item.z_index = +feature.properties.z_index;
+          }
 
           res.push(item); // TODO: clone base properties!
         }

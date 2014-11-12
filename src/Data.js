@@ -62,6 +62,8 @@ var Data = {
       res.id = item.id;
     }
 
+    res.z_index = item.z_index || 0;
+
     res.height = min(item.height/zoomScale, MAX_HEIGHT);
 
     res.minHeight = isNaN(item.minHeight) ? 0 : item.minHeight / zoomScale;
