@@ -81,17 +81,17 @@ var Buildings = {
         break;
 
         default:
+          var centerLine, p;
           Block.draw(context, footprint, item.holes, h, mh, wallColor, altColor, roofColor);
           if (item.roofShape === 'pyramid') {
             Pyramid.draw(context, footprint, item.center, h+item.roofHeight, h, roofColor, parseColor(roofColor).lightness(0.9));
-          } else if(item.roofShape == "gabled") {
-	          var center, p;
+          } else if(item.roofShape === "gabled") {
 	          if (Math.abs(footprint[0] - footprint[2]) < Math.abs(footprint[2] - footprint[4])){
 		          p = 0;
 	          } else {
 		          p = 2;
 	          }
-	          center = {
+	          centerLine = {
 			      l: {
 				      x: Math.max(footprint[p], footprint[p+2]) - Math.abs(footprint[p] - footprint[p+2])/2 -ORIGIN_X,
 			          y: Math.max(footprint[p+1], footprint[p+3]) - Math.abs(footprint[p+1] - footprint[p+3])/2 -ORIGIN_Y
@@ -101,14 +101,9 @@ var Buildings = {
 			          y: Math.max(footprint[p+5], footprint[p+7]) - Math.abs(footprint[p+5] - footprint[p+7])/2 -ORIGIN_Y
 			      }
 		      };
-	          if (p===0) {
-		          center.orientation = 'along'
-	          } else {
-		          center.orientation = 'across'
-	          }
-            Gabled.draw(context, footprint, center, h+(item.roofHeight||2), h, roofColor, parseColor(roofColor).lightness(0.9));
-          } else if(item.roofShape == "hipped") {
-	          var p;
+	          centerLine.orientation = p === 0 ? 'along' : 'across';
+            Gabled.draw(context, footprint, centerLine, h+(item.roofHeight||2), h, roofColor, parseColor(roofColor).lightness(0.9));
+          } else if(item.roofShape === "hipped") {
 	          if (Math.abs(footprint[0] - footprint[2]) < Math.abs(footprint[2] - footprint[4])){
 		          p = 0;
 	          } else {
@@ -117,8 +112,8 @@ var Buildings = {
 	           var helper = {
 				      x: Math.max(footprint[p], footprint[p+2]) - Math.abs(footprint[p] - footprint[p+2])/2,
 			          y: Math.max(footprint[p+1], footprint[p+3]) - Math.abs(footprint[p+1] - footprint[p+3])/2
-	           },
-	           center = {
+	           };
+	           centerLine = {
 			      l: {
 				      x: item.center.x +(p?+1:-1)* Math.abs(item.center.x - helper.x)/3*2 -ORIGIN_X,
 				      y: item.center.y - Math.abs(item.center.y - helper.y)/3*2 -ORIGIN_Y
@@ -128,13 +123,9 @@ var Buildings = {
 				      y: item.center.y + Math.abs(item.center.y - helper.y)/3*2 -ORIGIN_Y
 			      }
 		      };
-	          if (p===0) {
-		          center.orientation = 'along'
-	          } else {
-		          center.orientation = 'across'
-	          }
+	          centerLine.orientation = p === 0 ? 'along' : 'across';
 
-            Gabled.draw(context, footprint, center, h+(item.roofHeight||2), h, roofColor, parseColor(roofColor).lightness(0.9));
+            Gabled.draw(context, footprint, centerLine, h+(item.roofHeight||2), h, roofColor, parseColor(roofColor).lightness(0.9));
           }
       }
     }
