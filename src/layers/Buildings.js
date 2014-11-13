@@ -84,6 +84,8 @@ var Buildings = {
           Block.draw(context, footprint, item.holes, h, mh, wallColor, altColor, roofColor);
           if (item.roofShape === 'pyramid') {
             Pyramid.draw(context, footprint, item.center, h+item.roofHeight, h, roofColor, parseColor(roofColor).lightness(0.9));
+          } else if(item.roofShape == "gabled") {
+            Gabled.draw(context, footprint, item.center, h+(item.roofHeight||2), h, roofColor, parseColor(roofColor).lightness(0.9));
           }
       }
     }

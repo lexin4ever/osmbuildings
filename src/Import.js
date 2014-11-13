@@ -118,6 +118,7 @@ var Import = {
         item.shape = 'cylinder';
       break;
 
+      case 'gabled':
       case 'pyramid':
         item.roofShape = prop.roofShape;
       break;
