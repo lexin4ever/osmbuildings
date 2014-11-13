@@ -119,6 +119,7 @@ var Import = {
       break;
 
       case 'gabled':
+      case 'hipped':
       case 'pyramid':
         item.roofShape = prop.roofShape;
       break;

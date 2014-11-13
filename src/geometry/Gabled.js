@@ -6,21 +6,14 @@ var Gabled = {
       minScale = CAM_Z / (CAM_Z-minHeight),
       a = { x:0, y:0 },
       b = { x:0, y:0 };
-      var cen = {
-	      l: Buildings.project({
-		      x: Math.max(polygon[0], polygon[2]) - Math.abs(polygon[0] - polygon[2])/2 -ORIGIN_X,
-	          y: Math.max(polygon[1], polygon[3]) - Math.abs(polygon[1] - polygon[3])/2 -ORIGIN_Y
-	      }, scale),
-	      r: Buildings.project({
-		      x: Math.max(polygon[4], polygon[6]) - Math.abs(polygon[4] - polygon[6])/2 -ORIGIN_X,
-	          y: Math.max(polygon[5], polygon[7]) - Math.abs(polygon[5] - polygon[7])/2 -ORIGIN_Y
-	      }, scale)
-      };
+
+	center.r = Buildings.project(center.r, scale);
+	center.l = Buildings.project(center.l, scale);
 
         context.beginPath();
 		context.strokeStyle = '000';
-		context.moveTo(cen.l.x, cen.l.y);
-		context.lineTo(cen.r.x, cen.r.y);
+		context.moveTo(center.l.x, center.l.y);
+		context.lineTo(center.r.x, center.r.y);
 		context.stroke();
         context.closePath();
 
@@ -36,7 +29,7 @@ var Gabled = {
       }
 
       // backface culling check
-      if ((b.x-a.x) * (cen.l.y-a.y) > (cen.l.x-a.x) * (b.y-a.y)||(b.x-a.x) * (cen.r.y-a.y) > (cen.r.x-a.x) * (b.y-a.y)) {
+      if ((b.x-a.x) * (center.l.y-a.y) > (center.l.x-a.x) * (b.y-a.y)||(b.x-a.x) * (center.r.y-a.y) > (center.r.x-a.x) * (b.y-a.y)) {
         // depending on direction, set shading
         if ((a.x < b.x && a.y < b.y) || (a.x > b.x && a.y > b.y)) {
           context.fillStyle = color;
@@ -46,15 +39,15 @@ var Gabled = {
 
         context.beginPath();
 	      if (i===2){
-	        this._triangle(context, b, cen.l, cen.r);
-	        this._triangle(context, a, b, cen.l);
+	        this._triangle(context, b, center.l, center.r);
+	        this._triangle(context, a, b, center.l);
 	      } else if (i == 4) {
-            this._triangle(context, a, b, cen.r);
+            this._triangle(context, a, b, center.r);
 	      } else if (i == 6) {
-	        this._triangle(context, a, b, cen.r);
-	        this._triangle(context, b, cen.l, cen.r);
+	        this._triangle(context, a, b, center.r);
+	        this._triangle(context, b, center.l, center.r);
 	      } else if (i == 0) {
-            this._triangle(context, a, b, cen.l);
+            this._triangle(context, a, b, center.l);
 	      }
         context.closePath();
         context.fill();
