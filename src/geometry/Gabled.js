@@ -29,25 +29,39 @@ var Gabled = {
       }
 
       // backface culling check
-      if ((b.x-a.x) * (center.l.y-a.y) > (center.l.x-a.x) * (b.y-a.y)||(b.x-a.x) * (center.r.y-a.y) > (center.r.x-a.x) * (b.y-a.y)) {
-        // depending on direction, set shading
-        if ((a.x < b.x && a.y < b.y) || (a.x > b.x && a.y > b.y)) {
-          context.fillStyle = color;
-        } else {
-          context.fillStyle = altColor;
-        }
-
+      if ((b.x-a.x) * (center.l.y-a.y) > (center.l.x-a.x) * (b.y-a.y)&&(b.x-a.x) * (center.r.y-a.y) > (center.r.x-a.x) * (b.y-a.y)) {
         context.beginPath();
-	      if (i===2){
-	        this._triangle(context, b, center.l, center.r);
-	        this._triangle(context, a, b, center.l);
-	      } else if (i == 4) {
-            this._triangle(context, a, b, center.r);
-	      } else if (i == 6) {
-	        this._triangle(context, a, b, center.r);
-	        this._triangle(context, b, center.l, center.r);
-	      } else if (i == 0) {
-            this._triangle(context, a, b, center.l);
+	      if (center.orientation === 'along') {
+		      if (i===2){
+			      context.fillStyle = color;
+		        this._triangle(context, b, center.l, center.r);
+		        this._triangle(context, a, b, center.l);
+		      } else if (i === 4) {
+	            this._triangle(context, a, b, center.r);
+		      } else if (i === 6) {
+			      context.fillStyle = altColor;
+		        this._triangle(context, a, b, center.r);
+		        this._triangle(context, b, center.l, center.r);
+		      } else if (i === 0) {
+			      context.fillStyle = parseColor(altColor).lightness(0.9);
+	            this._triangle(context, a, b, center.l);
+		      }
+	      } else {
+		      if (i===4){
+			      context.fillStyle = color;
+		        this._triangle(context, b, center.l, center.r);
+		        this._triangle(context, a, b, center.l);
+		      } else if (i === 6) {
+			      context.fillStyle = parseColor(altColor).lightness(0.9);
+	            this._triangle(context, a, b, center.r);
+		      } else if (i === 0) {
+			      context.fillStyle = altColor;
+		        this._triangle(context, a, b, center.r);
+		        this._triangle(context, b, center.l, center.r);
+		      } else if (i === 2) {
+			      context.fillStyle = parseColor(altColor).lightness(0.9);
+	            this._triangle(context, a, b, center.l);
+		      }
 	      }
         context.closePath();
         context.fill();

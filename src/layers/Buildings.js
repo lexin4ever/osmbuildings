@@ -85,17 +85,32 @@ var Buildings = {
           if (item.roofShape === 'pyramid') {
             Pyramid.draw(context, footprint, item.center, h+item.roofHeight, h, roofColor, parseColor(roofColor).lightness(0.9));
           } else if(item.roofShape == "gabled") {
-
-		      var center = {
-			      l: {
-				      x: Math.max(footprint[0], footprint[2]) - Math.abs(footprint[0] - footprint[2])/2 -ORIGIN_X,
-			          y: Math.max(footprint[1], footprint[3]) - Math.abs(footprint[1] - footprint[3])/2 -ORIGIN_Y
-			      },
-			      r: {
-				      x: Math.max(footprint[4], footprint[6]) - Math.abs(footprint[4] - footprint[6])/2 -ORIGIN_X,
-			          y: Math.max(footprint[5], footprint[7]) - Math.abs(footprint[5] - footprint[7])/2 -ORIGIN_Y
-			      }
-		      };
+	          var center;
+	          if (Math.abs(footprint[0] - footprint[2]) < Math.abs(footprint[2] - footprint[4])){
+		          center = {
+				      l: {
+					      x: Math.max(footprint[0], footprint[2]) - Math.abs(footprint[0] - footprint[2])/2 -ORIGIN_X,
+				          y: Math.max(footprint[1], footprint[3]) - Math.abs(footprint[1] - footprint[3])/2 -ORIGIN_Y
+				      },
+				      r: {
+					      x: Math.max(footprint[4], footprint[6]) - Math.abs(footprint[4] - footprint[6])/2 -ORIGIN_X,
+				          y: Math.max(footprint[5], footprint[7]) - Math.abs(footprint[5] - footprint[7])/2 -ORIGIN_Y
+				      },
+			          orientation: 'along'
+			      };
+	          } else {
+		          center = {
+				      l: {
+					      x: Math.max(footprint[2], footprint[4]) - Math.abs(footprint[2] - footprint[4])/2 -ORIGIN_X,
+				          y: Math.max(footprint[3], footprint[5]) - Math.abs(footprint[3] - footprint[5])/2 -ORIGIN_Y
+				      },
+				      r: {
+					      x: Math.max(footprint[6], footprint[0]) - Math.abs(footprint[6] - footprint[0])/2 -ORIGIN_X,
+				          y: Math.max(footprint[7], footprint[1]) - Math.abs(footprint[7] - footprint[1])/2 -ORIGIN_Y
+				      },
+			          orientation: 'across'
+			      };
+	          }
             Gabled.draw(context, footprint, center, h+(item.roofHeight||2), h, roofColor, parseColor(roofColor).lightness(0.9));
           } else if(item.roofShape == "hipped") {
 	           var helper = {
@@ -110,7 +125,8 @@ var Buildings = {
 			      r: {
 				      x: item.center.x + Math.abs(item.center.x - helper.x)/3*2 -ORIGIN_X,
 				      y: item.center.y + Math.abs(item.center.y - helper.y)/3*2 -ORIGIN_Y
-			      }
+			      },
+			          orientation: 'along'
 		      };
 
             Gabled.draw(context, footprint, center, h+(item.roofHeight||2), h, roofColor, parseColor(roofColor).lightness(0.9));
