@@ -26,7 +26,7 @@ var Buildings = {
       center, radius;
 
     dataItems.sort(function(a, b) {
-      return (a.z_index-b.z_index) || (a.minHeight-b.minHeight) || ((a.height||0)-(b.height||0)) || getDistance(b.center, sortCam) - getDistance(a.center, sortCam) ;
+      return (a.z_index-b.z_index) || (a.minHeight-b.minHeight) || getDistance(b.center, sortCam) - getDistance(a.center, sortCam)|| ((b.height||0)-(a.height||0)) ;
     });
 
     for (var i = 0, il = dataItems.length; i < il; i++) {
