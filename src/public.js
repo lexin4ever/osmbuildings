@@ -7,6 +7,9 @@ proto.setStyle = function(style) {
 
 proto.style = function(style) {
   style = style || {};
+  if (style.caparison===false||style.caparison===true) {  // !!style.caparison===style.caparison
+    CAPARISON = style.caparison;
+  }
   var color;
   if ((color = style.color || style.wallColor)) {
     WALL_COLOR = parseColor(color);

@@ -40,4 +40,6 @@ var
 
   CAM_X, CAM_Y, CAM_Z = 450,
 
+  CAPARISON = true,
+
   isZooming;

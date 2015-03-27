@@ -82,20 +82,22 @@ var Import = {
     item.height    = prop.height    || (prop.levels   ? prop.levels  *this.METERS_PER_LEVEL : DEFAULT_HEIGHT);
     item.minHeight = prop.minHeight || (prop.minLevel ? prop.minLevel*this.METERS_PER_LEVEL : 0);
 
-	var wallColor = prop.wallColor || prop.color;
-	if (!wallColor && prop.material) {
-		wallColor = this.getMaterialColor(prop.material);
-	}
-    if (wallColor) {
-      item.wallColor = wallColor;
-    }
+	  if (CAPARISON) {
+		var wallColor = prop.wallColor || prop.color;
+		if (!wallColor && prop.material) {
+			wallColor = this.getMaterialColor(prop.material);
+		}
+	    if (wallColor) {
+	      item.wallColor = wallColor;
+	    }
 
-	var roofColor = prop.roofColor;
-	if (!roofColor && prop.roofMaterial) {
-		roofColor = this.getMaterialColor(prop.roofMaterial);
-	}
-    if (roofColor) {
-      item.roofColor = roofColor;
+		var roofColor = prop.roofColor;
+		if (!roofColor && prop.roofMaterial) {
+			roofColor = this.getMaterialColor(prop.roofMaterial);
+		}
+	    if (roofColor) {
+	      item.roofColor = roofColor;
+	    }
     }
 
     switch (prop.shape) {
